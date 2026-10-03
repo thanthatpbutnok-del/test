@@ -1,0 +1,1066 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบวัดเจตคติ 5 รูปแบบ - รายวิชาวิทยาศาสตร์ (ว2.3)</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js for Dashboard Visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts (Sarabun & Prompt) -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        accent: {
+                            teal: '#0d9488',
+                            sky: '#0284c7',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Prompt', 'Sarabun', 'sans-serif'],
+                        body: ['Sarabun', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Sarabun', 'Prompt', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        h1, h2, h3, h4, h5, h6, .font-prompt {
+            font-family: 'Prompt', sans-serif;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            body {
+                background: white;
+                color: black;
+            }
+            .shadow-card {
+                box-shadow: none !important;
+                border: 1px solid #e2e8f0;
+            }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Navigation & Header Bar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Brand / Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-700 flex items-center justify-center text-white shadow-md shadow-emerald-200">
+                        <i class="fa-solid fa-flask-vial text-lg"></i>
+                    </div>
+                    <div>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-emerald-600 block">งานครั้งที่ 5</span>
+                        <h1 class="text-base sm:text-lg font-bold text-slate-800 font-prompt leading-tight">แบบวัดเจตคติ 5 รูปแบบ (ว2.3)</h1>
+                    </div>
+                </div>
+
+                <!-- Navigation Tabs (Desktop) -->
+                <nav class="hidden md:flex space-x-1 lg:space-x-2 text-sm font-medium">
+                    <a href="#section-info" class="px-3 py-2 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 transition">คำชี้แจง</a>
+                    <a href="#section-form" class="px-3 py-2 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 transition">แบบวัด 5 รูปแบบ</a>
+                    <a href="#section-dashboard" class="px-3 py-2 rounded-lg text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 transition">สรุปผลประเมิน</a>
+                </nav>
+
+                <!-- Action Button -->
+                <div class="flex items-center space-x-2">
+                    <button onclick="window.print()" class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-medium transition border border-slate-200">
+                        <i class="fa-solid fa-print"></i>
+                        <span class="hidden sm:inline">พิมพ์รายงาน</span>
+                    </button>
+                    <button onclick="fillSampleData()" class="inline-flex items-center space-x-1.5 px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs sm:text-sm font-medium transition border border-emerald-200">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span class="hidden sm:inline">สุ่มคำตอบตัวอย่าง</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8 flex-grow">
+
+        <!-- Hero & Info Banner -->
+        <section id="section-info" class="bg-gradient-to-r from-slate-900 via-slate-800 to-emerald-950 text-white rounded-3xl p-6 sm:p-8 shadow-xl relative overflow-hidden">
+            <!-- Decorative Elements -->
+            <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute right-1/3 -top-10 w-48 h-48 bg-teal-500/10 rounded-full blur-2xl pointer-events-none"></div>
+            
+            <div class="relative z-10 max-w-3xl">
+                <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 text-xs font-semibold mb-4">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <span>ส่งแบบประเมินเจตคติเกี่ยวกับรายวิชาตนเอง</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold font-prompt text-white mb-3 tracking-wide">
+                    แบบวัดเจตคติต่อการเรียน รายวิชาวิทยาศาสตร์ (ว2.3)
+                </h2>
+                <p class="text-slate-300 text-sm sm:text-base leading-relaxed mb-6 font-body">
+                    รวบรวมเครื่องมือวัดเจตคติครบถ้วนทั้ง 5 รูปแบบมาตรฐานทางการวัดและประเมินผลการศึกษา ประกอบด้วย Likert Scale, Osgood's Semantic Differential, Guttman Scale, Rating Scale และ Thurstone Scale สำหรับวิชาวิทยาศาสตร์ ระดับชั้นมัธยมศึกษา
+                </p>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs sm:text-sm pt-2 border-t border-slate-700/60">
+                    <div>
+                        <span class="text-slate-400 block text-xs">รายวิชา</span>
+                        <span class="font-medium text-emerald-300">วิทยาศาสตร์ (ว2.3)</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-xs">จำนวนเครื่องมือ</span>
+                        <span class="font-medium text-emerald-300">5 รูปแบบ (25 ข้อ)</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-xs">วัตถุประสงค์</span>
+                        <span class="font-medium text-emerald-300">ประเมินเจตคติผู้เรียน</span>
+                    </div>
+                    <div>
+                        <span class="text-slate-400 block text-xs">การประมวลผล</span>
+                        <span class="font-medium text-emerald-300">Dashboard & สถิติ</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Form Section -->
+        <form id="attitudeForm" onsubmit="calculateResults(event)" class="space-y-8">
+
+            <!-- 1. LIKERT SCALE -->
+            <section id="section-likert" class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center font-prompt text-sm">
+                            1
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 font-prompt">มาตรวัดแบบลิเคิร์ท (Likert Scale)</h3>
+                            <p class="text-xs text-slate-500">จำนวน 5 ข้อ (5 = เห็นด้วยอย่างยิ่ง, 1 = ไม่เห็นด้วยอย่างยิ่ง)</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-md bg-emerald-50 text-emerald-700 text-xs font-medium border border-emerald-200">
+                        Likert 5-Point
+                    </span>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Item 1 -->
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">1. การเรียนวิชาวิทยาศาสตร์ (ว2.3) ช่วยฝึกให้ข้าพเจ้าคิดอย่างมีเหตุผล</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_1" value="5" class="sr-only" required>
+                                <span class="block font-bold">5</span>
+                                <span class="hidden sm:block text-[10px] mt-0.5 opacity-90">เห็นด้วยอย่างยิ่ง</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_1" value="4" class="sr-only">
+                                <span class="block font-bold">4</span>
+                                <span class="hidden sm:block text-[10px] mt-0.5 opacity-90">เห็นด้วย</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_1" value="3" class="sr-only">
+                                <span class="block font-bold">3</span>
+                                <span class="hidden sm:block text-[10px] mt-0.5 opacity-90">ไม่แน่ใจ</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_1" value="2" class="sr-only">
+                                <span class="block font-bold">2</span>
+                                <span class="hidden sm:block text-[10px] mt-0.5 opacity-90">ไม่เห็นด้วย</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_1" value="1" class="sr-only">
+                                <span class="block font-bold">1</span>
+                                <span class="hidden sm:block text-[10px] mt-0.5 opacity-90">ไม่เห็นด้วยอย่างยิ่ง</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Item 2 -->
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">2. ข้าพเจ้ารู้สึกกระตือรือร้นเมื่อถึงเวลาเรียนวิชาวิทยาศาสตร์ (ว2.3)</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_2" value="5" class="sr-only" required>
+                                <span class="block font-bold">5</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_2" value="4" class="sr-only">
+                                <span class="block font-bold">4</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_2" value="3" class="sr-only">
+                                <span class="block font-bold">3</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_2" value="2" class="sr-only">
+                                <span class="block font-bold">2</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_2" value="1" class="sr-only">
+                                <span class="block font-bold">1</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Item 3 -->
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">3. ข้าพเจ้าชอบการทดลองและการลงมือปฏิบัติในรายวิชานี้</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_3" value="5" class="sr-only" required>
+                                <span class="block font-bold">5</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_3" value="4" class="sr-only">
+                                <span class="block font-bold">4</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_3" value="3" class="sr-only">
+                                <span class="block font-bold">3</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_3" value="2" class="sr-only">
+                                <span class="block font-bold">2</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_3" value="1" class="sr-only">
+                                <span class="block font-bold">1</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Item 4 -->
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">4. เนื้อหาวิชาวิทยาศาสตร์ (ว2.3) สามารถนำไปประยุกต์ใช้ในชีวิตประจำวันได้จริง</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_4" value="5" class="sr-only" required>
+                                <span class="block font-bold">5</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_4" value="4" class="sr-only">
+                                <span class="block font-bold">4</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_4" value="3" class="sr-only">
+                                <span class="block font-bold">3</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_4" value="2" class="sr-only">
+                                <span class="block font-bold">2</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_4" value="1" class="sr-only">
+                                <span class="block font-bold">1</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Item 5 -->
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">5. ข้าพเจ้าตั้งใจจะศึกษาค้นคว้าความรู้วิทยาศาสตร์เพิ่มเติมด้วยตนเอง</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_5" value="5" class="sr-only" required>
+                                <span class="block font-bold">5</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_5" value="4" class="sr-only">
+                                <span class="block font-bold">4</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_5" value="3" class="sr-only">
+                                <span class="block font-bold">3</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_5" value="2" class="sr-only">
+                                <span class="block font-bold">2</span>
+                            </label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-emerald-500 has-[:checked]:bg-emerald-500 has-[:checked]:text-white has-[:checked]:border-emerald-500 transition shadow-sm">
+                                <input type="radio" name="likert_5" value="1" class="sr-only">
+                                <span class="block font-bold">1</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. OSGOOD SEMANTIC DIFFERENTIAL SCALE -->
+            <section id="section-osgood" class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-teal-100 text-teal-700 font-bold flex items-center justify-center font-prompt text-sm">
+                            2
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 font-prompt">มาตรวัดความต่างทางศัพท์ (Osgood's Semantic Differential)</h3>
+                            <p class="text-xs text-slate-500">จำนวน 5 ข้อ (เลือกระดับความรู้สึกระหว่างคำตรงข้าม 1 - 7 คะแนน)</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-md bg-teal-50 text-teal-700 text-xs font-medium border border-teal-200">
+                        7-Point Scale
+                    </span>
+                </div>
+
+                <div class="space-y-6">
+                    <!-- Pairs 1 to 5 -->
+                    <script>
+                        const osgoodPairs = [
+                            { id: 1, left: "น่าเบื่อ", right: "สนุกสนาน" },
+                            { id: 2, left: "ยากซับซ้อน", right: "เข้าใจง่าย" },
+                            { id: 3, left: "ไร้ประโยชน์", right: "มีคุณค่าอย่างยิ่ง" },
+                            { id: 4, left: "เครียด / กดดัน", right: "ผ่อนคลาย / น่าสนใจ" },
+                            { id: 5, left: "ล้าสมัย", right: "ทันสมัย / ท้าทาย" }
+                        ];
+                    </script>
+
+                    <!-- Render Pairs via Standard HTML Template structure -->
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-4">
+                        <div class="flex justify-between items-center text-xs sm:text-sm font-semibold text-slate-700">
+                            <span class="text-rose-600">ด้านลบ (1)</span>
+                            <span class="text-slate-400 font-normal text-xs">ความรู้สึกต่อวิชาวิทยาศาสตร์</span>
+                            <span class="text-emerald-600">ด้านบวก (7)</span>
+                        </div>
+
+                        <!-- Item 1 -->
+                        <div class="space-y-1">
+                            <div class="flex justify-between text-xs font-medium text-slate-700">
+                                <span>1. น่าเบื่อ</span>
+                                <span>สนุกสนาน</span>
+                            </div>
+                            <div class="flex justify-between items-center gap-1 sm:gap-2">
+                                <template x-for="i in 7"></template>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_1" value="1" required class="accent-teal-600"><span class="block text-[10px] text-slate-400">1</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_1" value="2" class="accent-teal-600"><span class="block text-[10px] text-slate-400">2</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_1" value="3" class="accent-teal-600"><span class="block text-[10px] text-slate-400">3</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_1" value="4" class="accent-teal-600"><span class="block text-[10px] text-slate-400">4</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_1" value="5" class="accent-teal-600"><span class="block text-[10px] text-slate-400">5</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_1" value="6" class="accent-teal-600"><span class="block text-[10px] text-slate-400">6</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_1" value="7" class="accent-teal-600"><span class="block text-[10px] text-slate-400">7</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Item 2 -->
+                        <div class="space-y-1 pt-2 border-t border-slate-200/60">
+                            <div class="flex justify-between text-xs font-medium text-slate-700">
+                                <span>2. ยากซับซ้อน</span>
+                                <span>เข้าใจง่าย</span>
+                            </div>
+                            <div class="flex justify-between items-center gap-1 sm:gap-2">
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_2" value="1" required class="accent-teal-600"><span class="block text-[10px] text-slate-400">1</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_2" value="2" class="accent-teal-600"><span class="block text-[10px] text-slate-400">2</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_2" value="3" class="accent-teal-600"><span class="block text-[10px] text-slate-400">3</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_2" value="4" class="accent-teal-600"><span class="block text-[10px] text-slate-400">4</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_2" value="5" class="accent-teal-600"><span class="block text-[10px] text-slate-400">5</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_2" value="6" class="accent-teal-600"><span class="block text-[10px] text-slate-400">6</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_2" value="7" class="accent-teal-600"><span class="block text-[10px] text-slate-400">7</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="space-y-1 pt-2 border-t border-slate-200/60">
+                            <div class="flex justify-between text-xs font-medium text-slate-700">
+                                <span>3. ไร้ประโยชน์</span>
+                                <span>มีคุณค่าอย่างยิ่ง</span>
+                            </div>
+                            <div class="flex justify-between items-center gap-1 sm:gap-2">
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_3" value="1" required class="accent-teal-600"><span class="block text-[10px] text-slate-400">1</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_3" value="2" class="accent-teal-600"><span class="block text-[10px] text-slate-400">2</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_3" value="3" class="accent-teal-600"><span class="block text-[10px] text-slate-400">3</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_3" value="4" class="accent-teal-600"><span class="block text-[10px] text-slate-400">4</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_3" value="5" class="accent-teal-600"><span class="block text-[10px] text-slate-400">5</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_3" value="6" class="accent-teal-600"><span class="block text-[10px] text-slate-400">6</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_3" value="7" class="accent-teal-600"><span class="block text-[10px] text-slate-400">7</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="space-y-1 pt-2 border-t border-slate-200/60">
+                            <div class="flex justify-between text-xs font-medium text-slate-700">
+                                <span>4. เครียด / กดดัน</span>
+                                <span>ผ่อนคลาย / น่าสนใจ</span>
+                            </div>
+                            <div class="flex justify-between items-center gap-1 sm:gap-2">
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_4" value="1" required class="accent-teal-600"><span class="block text-[10px] text-slate-400">1</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_4" value="2" class="accent-teal-600"><span class="block text-[10px] text-slate-400">2</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_4" value="3" class="accent-teal-600"><span class="block text-[10px] text-slate-400">3</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_4" value="4" class="accent-teal-600"><span class="block text-[10px] text-slate-400">4</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_4" value="5" class="accent-teal-600"><span class="block text-[10px] text-slate-400">5</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_4" value="6" class="accent-teal-600"><span class="block text-[10px] text-slate-400">6</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_4" value="7" class="accent-teal-600"><span class="block text-[10px] text-slate-400">7</span></label>
+                            </div>
+                        </div>
+
+                        <!-- Item 5 -->
+                        <div class="space-y-1 pt-2 border-t border-slate-200/60">
+                            <div class="flex justify-between text-xs font-medium text-slate-700">
+                                <span>5. ล้าสมัย</span>
+                                <span>ทันสมัย / ท้าทาย</span>
+                            </div>
+                            <div class="flex justify-between items-center gap-1 sm:gap-2">
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_5" value="1" required class="accent-teal-600"><span class="block text-[10px] text-slate-400">1</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_5" value="2" class="accent-teal-600"><span class="block text-[10px] text-slate-400">2</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_5" value="3" class="accent-teal-600"><span class="block text-[10px] text-slate-400">3</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_5" value="4" class="accent-teal-600"><span class="block text-[10px] text-slate-400">4</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_5" value="5" class="accent-teal-600"><span class="block text-[10px] text-slate-400">5</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_5" value="6" class="accent-teal-600"><span class="block text-[10px] text-slate-400">6</span></label>
+                                <label class="flex-1 text-center cursor-pointer"><input type="radio" name="osgood_5" value="7" class="accent-teal-600"><span class="block text-[10px] text-slate-400">7</span></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 3. GUTTMAN SCALE -->
+            <section id="section-guttman" class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-sky-100 text-sky-700 font-bold flex items-center justify-center font-prompt text-sm">
+                            3
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 font-prompt">มาตรวัดสเกลสะสม (Guttman Scale)</h3>
+                            <p class="text-xs text-slate-500">จำนวน 5 ข้อ (เรียงจากพฤติกรรมง่ายไปยาก เลือก ตอบ "ใช่" หรือ "ไม่ใช่")</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-md bg-sky-50 text-sky-700 text-xs font-medium border border-sky-200">
+                        Cumulative Scale
+                    </span>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">1. ข้าพเจ้าเข้าเรียนวิชาวิทยาศาสตร์ (ว2.3) ตรงเวลาทุกครั้ง</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_1" value="1" class="sr-only" required> ใช่ (1)
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-rose-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_1" value="0" class="sr-only"> ไม่ใช่ (0)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">2. ข้าพเจ้าตั้งใจฟังและจดบันทึกขณะครูผู้สอนอธิบายเนื้อหา</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_2" value="1" class="sr-only" required> ใช่ (1)
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-rose-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_2" value="0" class="sr-only"> ไม่ใช่ (0)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">3. ข้าพเจ้าซักถามครูหรือเพื่อนเมื่อไม่เข้าใจในบทเรียนวิทยาศาสตร์</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_3" value="1" class="sr-only" required> ใช่ (1)
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-rose-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_3" value="0" class="sr-only"> ไม่ใช่ (0)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">4. ข้าพเจ้าเสนอตัวเป็นผู้นำในการทำกิจกรรมกลุ่มและการทดลอง</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_4" value="1" class="sr-only" required> ใช่ (1)
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-rose-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_4" value="0" class="sr-only"> ไม่ใช่ (0)
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">5. ข้าพเจ้าสามารถ tutor หรืออธิบายเนื้อหาวิทยาศาสตร์ให้เพื่อนฟังได้</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-emerald-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_5" value="1" class="sr-only" required> ใช่ (1)
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-rose-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="guttman_5" value="0" class="sr-only"> ไม่ใช่ (0)
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 4. RATING SCALE -->
+            <section id="section-rating" class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-700 font-bold flex items-center justify-center font-prompt text-sm">
+                            4
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 font-prompt">มาตรวัดประเมินค่าทั่วไป (Rating Scale)</h3>
+                            <p class="text-xs text-slate-500">จำนวน 5 ข้อ (ประเมินระดับคุณภาพการจัดการเรียนรู้ 5 = ดีมาก, 1 = ปรับปรุง)</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-md bg-indigo-50 text-indigo-700 text-xs font-medium border border-indigo-200">
+                        General Rating
+                    </span>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">1. ความชัดเจนของการอธิบายเนื้อหาและการสาธิตการทดลอง</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_1" value="5" required class="sr-only"><span class="font-bold">ดีมาก (5)</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_1" value="4" class="sr-only"><span class="font-bold">ดี (4)</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_1" value="3" class="sr-only"><span class="font-bold">ปานกลาง (3)</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_1" value="2" class="sr-only"><span class="font-bold">พอใช้ (2)</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_1" value="1" class="sr-only"><span class="font-bold">ปรับปรุง (1)</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">2. ความเหมาะสมของสื่อการเรียนรู้และอุปกรณ์ห้องปฏิบัติการ</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_2" value="5" required class="sr-only"><span class="font-bold">5</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_2" value="4" class="sr-only"><span class="font-bold">4</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_2" value="3" class="sr-only"><span class="font-bold">3</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_2" value="2" class="sr-only"><span class="font-bold">2</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_2" value="1" class="sr-only"><span class="font-bold">1</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">3. การเปิดโอกาสให้ผู้เรียนได้ถามคำถามและแสดงความคิดเห็น</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_3" value="5" required class="sr-only"><span class="font-bold">5</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_3" value="4" class="sr-only"><span class="font-bold">4</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_3" value="3" class="sr-only"><span class="font-bold">3</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_3" value="2" class="sr-only"><span class="font-bold">2</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_3" value="1" class="sr-only"><span class="font-bold">1</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">4. บรรยากาศและสภาพแวดล้อมที่ส่งเสริมการเรียนรู้ในชั้นเรียน</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_4" value="5" required class="sr-only"><span class="font-bold">5</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_4" value="4" class="sr-only"><span class="font-bold">4</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_4" value="3" class="sr-only"><span class="font-bold">3</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_4" value="2" class="sr-only"><span class="font-bold">2</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_4" value="1" class="sr-only"><span class="font-bold">1</span></label>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 space-y-3">
+                        <p class="text-sm font-medium text-slate-800">5. ความยุติธรรมและความเหมาะสมของเกณฑ์การวัดและประเมินผล</p>
+                        <div class="grid grid-cols-5 gap-2 text-center text-xs">
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_5" value="5" required class="sr-only"><span class="font-bold">5</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_5" value="4" class="sr-only"><span class="font-bold">4</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_5" value="3" class="sr-only"><span class="font-bold">3</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_5" value="2" class="sr-only"><span class="font-bold">2</span></label>
+                            <label class="cursor-pointer p-2 rounded-lg bg-white border border-slate-200 hover:border-indigo-500 has-[:checked]:bg-indigo-600 has-[:checked]:text-white transition shadow-sm"><input type="radio" name="rating_5" value="1" class="sr-only"><span class="font-bold">1</span></label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. THURSTONE SCALE -->
+            <section id="section-thurstone" class="bg-white rounded-2xl p-6 sm:p-8 shadow-sm border border-slate-200/80 transition hover:shadow-md">
+                <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-700 font-bold flex items-center justify-center font-prompt text-sm">
+                            5
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-bold text-slate-800 font-prompt">มาตรวัดของเธอร์สโตน (Thurstone Scale)</h3>
+                            <p class="text-xs text-slate-500">จำนวน 5 ข้อ (เลือกว่า "เห็นด้วย" หรือ "ไม่เห็นด้วย" ตามเจตคติที่แท้จริง)</p>
+                        </div>
+                    </div>
+                    <span class="px-2.5 py-1 rounded-md bg-amber-50 text-amber-700 text-xs font-medium border border-amber-200">
+                        Equal-Appearing Interval
+                    </span>
+                </div>
+
+                <div class="space-y-3">
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">1. วิชาวิทยาศาสตร์ (ว2.3) เป็นวิชาที่สำคัญที่สุดวิชาหนึ่งในการพัฒนาความคิดมนุษย์</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-amber-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_1" value="5" class="sr-only" required> เห็นด้วย
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-slate-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_1" value="1" class="sr-only"> ไม่เห็นด้วย
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">2. การเรียนวิชาวิทยาศาสตร์ทำให้ได้เรียนรู้เรื่องราวใหม่ๆ ที่น่าสนใจอยู่เสมอ</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-amber-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_2" value="4" class="sr-only" required> เห็นด้วย
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-slate-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_2" value="1" class="sr-only"> ไม่เห็นด้วย
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">3. การเรียนวิชาวิทยาศาสตร์ก็เหมือนกับวิชาทั่วๆ ไป ไม่ได้รู้สึกชอบหรือเกลียดเป็นพิเศษ</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-amber-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_3" value="3" class="sr-only" required> เห็นด้วย
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-slate-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_3" value="1" class="sr-only"> ไม่เห็นด้วย
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">4. วิชาวิทยาศาสตร์มีเนื้อหาค่อนข้างยากและเข้าใจได้ยากสำหรับข้าพเจ้า</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-amber-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_4" value="2" class="sr-only" required> เห็นด้วย
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-slate-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_4" value="1" class="sr-only"> ไม่เห็นด้วย
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="p-3 bg-slate-50 rounded-xl border border-slate-100 flex items-center justify-between">
+                        <span class="text-sm text-slate-800 font-medium">5. ข้าพเจ้ารู้สึกอึดอัดและไม่อยากเข้าเรียนในรายวิชาวิทยาศาสตร์เลย</span>
+                        <div class="flex space-x-2">
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-emerald-50 has-[:checked]:bg-amber-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_5" value="1" class="sr-only" required> เห็นด้วย
+                            </label>
+                            <label class="cursor-pointer px-3 py-1.5 rounded-lg bg-white border border-slate-200 text-xs font-medium hover:bg-rose-50 has-[:checked]:bg-slate-600 has-[:checked]:text-white transition">
+                                <input type="radio" name="thurstone_5" value="5" class="sr-only"> ไม่เห็นด้วย
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SUBMIT BUTTON -->
+            <div class="text-center pt-4 no-print">
+                <button type="submit" class="w-full sm:w-auto px-8 py-3.5 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-bold font-prompt rounded-2xl shadow-lg shadow-emerald-200 hover:shadow-xl transition transform active:scale-95 text-base">
+                    <i class="fa-solid fa-calculator mr-2"></i> ส่งแบบวัดเจตคติ / คำนวณและประมวลผล
+                </button>
+            </div>
+        </form>
+
+        <!-- RESULTS DASHBOARD SECTION -->
+        <section id="section-dashboard" class="mt-12 bg-white rounded-3xl p-6 sm:p-8 shadow-lg border border-slate-200/80 space-y-8">
+            <div class="flex flex-col sm:flex-row justify-between sm:items-center border-b border-slate-100 pb-4 gap-2">
+                <div>
+                    <span class="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Dashboard & Statistics</span>
+                    <h2 class="text-xl sm:text-2xl font-bold text-slate-800 font-prompt">สรุปผลการประเมินเจตคติวิชาวิทยาศาสตร์ (ว2.3)</h2>
+                </div>
+                <div class="inline-flex items-center space-x-2 text-xs text-slate-500 bg-slate-100 px-3 py-1.5 rounded-lg self-start sm:self-auto">
+                    <i class="fa-regular fa-clock"></i>
+                    <span>อัปเดตผลตามเวลาจริง</span>
+                </div>
+            </div>
+
+            <!-- Overview Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-slate-50 border border-slate-200/70 p-4 rounded-2xl">
+                    <span class="text-xs text-slate-500 block mb-1">ค่าเฉลี่ยรวม ($\bar{X}$)</span>
+                    <span id="stat-mean" class="text-2xl sm:text-3xl font-bold text-emerald-600 font-prompt">4.36</span>
+                    <span id="stat-mean-label" class="block text-xs font-medium text-emerald-700 mt-1">ระดับ: เจตคติติดบวกมาก (ดีมาก)</span>
+                </div>
+                <div class="bg-slate-50 border border-slate-200/70 p-4 rounded-2xl">
+                    <span class="text-xs text-slate-500 block mb-1">ส่วนเบี่ยงเบนมาตรฐาน (S.D.)</span>
+                    <span id="stat-sd" class="text-2xl sm:text-3xl font-bold text-slate-700 font-prompt">0.68</span>
+                    <span class="block text-xs text-slate-500 mt-1">กระจายตัวอยู่ในเกณฑ์ต่ำ</span>
+                </div>
+                <div class="bg-slate-50 border border-slate-200/70 p-4 rounded-2xl">
+                    <span class="text-xs text-slate-500 block mb-1">สัมประสิทธิ์ความแปรผัน (CV%)</span>
+                    <span id="stat-cv" class="text-2xl sm:text-3xl font-bold text-sky-600 font-prompt">15.6%</span>
+                    <span class="block text-xs text-sky-700 mt-1">ความสม่ำเสมอของผล</span>
+                </div>
+                <div class="bg-slate-50 border border-slate-200/70 p-4 rounded-2xl">
+                    <span class="text-xs text-slate-500 block mb-1">สรุปการแปลผล</span>
+                    <span id="stat-result" class="text-2xl sm:text-3xl font-bold text-teal-600 font-prompt">ดีมาก</span>
+                    <span class="block text-xs text-teal-700 mt-1">ความพึงพอใจและเจตคติสูง</span>
+                </div>
+            </div>
+
+            <!-- Chart Visualization -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 pt-4">
+                <div class="lg:col-span-2 bg-slate-50 border border-slate-200/70 p-4 sm:p-6 rounded-2xl">
+                    <h3 class="text-sm font-bold text-slate-800 font-prompt mb-4 flex items-center justify-between">
+                        <span>เปรียบเทียบค่าเฉลี่ยจำแนกตามรายด้าน ( scaled 0 - 5 )</span>
+                        <i class="fa-solid fa-chart-bar text-slate-400"></i>
+                    </h3>
+                    <div class="h-64">
+                        <canvas id="attitudeChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 border border-slate-200/70 p-4 sm:p-6 rounded-2xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-sm font-bold text-slate-800 font-prompt mb-3">คำอธิบายเกณฑ์การแปลผล</h3>
+                        <div class="space-y-2 text-xs text-slate-600">
+                            <div class="flex justify-between items-center p-2 rounded bg-white">
+                                <span>4.21 - 5.00</span>
+                                <span class="font-bold text-emerald-600">เจตคติดีมาก (Very Positive)</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 rounded bg-white">
+                                <span>3.41 - 4.20</span>
+                                <span class="font-bold text-teal-600">เจตคติดี (Positive)</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 rounded bg-white">
+                                <span>2.61 - 3.40</span>
+                                <span class="font-bold text-amber-600">ปานกลาง / ปานกลาง (Neutral)</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 rounded bg-white">
+                                <span>1.81 - 2.60</span>
+                                <span class="font-bold text-orange-600">พอใช้ / ค่อนข้างต่ำ (Negative)</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 rounded bg-white">
+                                <span>1.00 - 1.80</span>
+                                <span class="font-bold text-rose-600">ต้องปรับปรุง (Very Negative)</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-400">
+                        * หมายเหตุ: ข้อมูลการคำนวณถูกแปลงให้เป็นมาตรฐาน 5 ระดับเพื่อการเปรียบเทียบใน Dashboard
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Table Summary (Inspired by Reference Image Style) -->
+            <div class="pt-4 overflow-x-auto">
+                <h3 class="text-sm font-bold text-slate-800 font-prompt mb-3">ตารางสรุปผลสถิติจำแนกตามเครื่องมือวัดเจตคติทั้ง 5 รูปแบบ</h3>
+                <table class="w-full text-left border-collapse text-xs sm:text-sm">
+                    <thead>
+                        <tr class="bg-slate-100 border-b border-slate-200 text-slate-700 font-prompt">
+                            <th class="py-3 px-4">รูปแบบเครื่องมือวัด</th>
+                            <th class="py-3 px-3 text-center">$\bar{X}$ (ค่าเฉลี่ย)</th>
+                            <th class="py-3 px-3 text-center">S.D.</th>
+                            <th class="py-3 px-3 text-center">CV%</th>
+                            <th class="py-3 px-4 text-center">การแปลผล</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-100 text-slate-700">
+                        <tr>
+                            <td class="py-3 px-4 font-medium">1. มาตรวัดแบบลิเคิร์ท (Likert Scale)</td>
+                            <td id="tbl-likert-mean" class="py-3 px-3 text-center font-semibold">4.40</td>
+                            <td id="tbl-likert-sd" class="py-3 px-3 text-center">0.65</td>
+                            <td id="tbl-likert-cv" class="py-3 px-3 text-center">14.8%</td>
+                            <td id="tbl-likert-result" class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-medium">ดีมาก</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">2. มาตรวัดความต่างทางศัพท์ (Osgood)</td>
+                            <td id="tbl-osgood-mean" class="py-3 px-3 text-center font-semibold">4.30</td>
+                            <td id="tbl-osgood-sd" class="py-3 px-3 text-center">0.70</td>
+                            <td id="tbl-osgood-cv" class="py-3 px-3 text-center">16.3%</td>
+                            <td id="tbl-osgood-result" class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-medium">ดีมาก</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">3. มาตรวัดสเกลสะสม (Guttman Scale)</td>
+                            <td id="tbl-guttman-mean" class="py-3 px-3 text-center font-semibold">4.20</td>
+                            <td id="tbl-guttman-sd" class="py-3 px-3 text-center">0.80</td>
+                            <td id="tbl-guttman-cv" class="py-3 px-3 text-center">19.0%</td>
+                            <td id="tbl-guttman-result" class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-teal-100 text-teal-800 font-medium">ดี</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">4. มาตรวัดประเมินค่าทั่วไป (Rating Scale)</td>
+                            <td id="tbl-rating-mean" class="py-3 px-3 text-center font-semibold">4.50</td>
+                            <td id="tbl-rating-sd" class="py-3 px-3 text-center">0.55</td>
+                            <td id="tbl-rating-cv" class="py-3 px-3 text-center">12.2%</td>
+                            <td id="tbl-rating-result" class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-medium">ดีมาก</span></td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 px-4 font-medium">5. มาตรวัดของเธอร์สโตน (Thurstone Scale)</td>
+                            <td id="tbl-thurstone-mean" class="py-3 px-3 text-center font-semibold">4.40</td>
+                            <td id="tbl-thurstone-sd" class="py-3 px-3 text-center">0.72</td>
+                            <td id="tbl-thurstone-cv" class="py-3 px-3 text-center">16.4%</td>
+                            <td id="tbl-thurstone-result" class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-medium">ดีมาก</span></td>
+                        </tr>
+                        <tr class="bg-emerald-50/60 font-bold text-slate-800 border-t-2 border-emerald-200">
+                            <td class="py-3 px-4">เฉลี่ยรวมทุกเครื่องมือประเมิน</td>
+                            <td id="tbl-total-mean" class="py-3 px-3 text-center text-emerald-700">4.36</td>
+                            <td id="tbl-total-sd" class="py-3 px-3 text-center text-emerald-700">0.68</td>
+                            <td id="tbl-total-cv" class="py-3 px-3 text-center text-emerald-700">15.6%</td>
+                            <td id="tbl-total-result" class="py-3 px-4 text-center"><span class="px-2 py-0.5 rounded bg-emerald-600 text-white font-medium">ดีมาก</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 mt-12 py-6 no-print">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500 space-y-1">
+            <p>งานครั้งที่ 5: ส่งแบบประเมินที่เป็นแบบวัดเจตคติ 5 รูปแบบ ที่เกี่ยวข้องกับรายวิชาของตัวเอง</p>
+            <p class="font-medium text-slate-600">รายวิชา วิทยาศาสตร์ (ว2.3) - เครื่องมือประเมินผลเจตคติทางการศึกษา</p>
+        </div>
+    </footer>
+
+    <script>
+        let myChart = null;
+
+        // Initialize Chart.js
+        window.addEventListener('DOMContentLoaded', () => {
+            initChart([4.40, 4.30, 4.20, 4.50, 4.40]);
+            fillSampleData(); // Pre-fill with sample data for clean user experience
+        });
+
+        function initChart(dataValues) {
+            const ctx = document.getElementById('attitudeChart').getContext('2d');
+            
+            if(myChart) {
+                myChart.destroy();
+            }
+
+            myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Likert Scale', 'Osgood Scale', 'Guttman Scale', 'Rating Scale', 'Thurstone Scale'],
+                    datasets: [{
+                        label: 'ค่าเฉลี่ยความพึงพอใจ / เจตคติ (X-bar)',
+                        data: dataValues,
+                        backgroundColor: [
+                            '#10b981',
+                            '#0d9488',
+                            '#0284c7',
+                            '#6366f1',
+                            '#f59e0b'
+                        ],
+                        borderRadius: 8,
+                        barThickness: 28
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            min: 0,
+                            max: 5,
+                            ticks: {
+                                stepSize: 1
+                            },
+                            grid: {
+                                color: '#f1f5f9'
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        }
+
+        // Auto Random Filler for Demo Purpose
+        function fillSampleData() {
+            const form = document.getElementById('attitudeForm');
+            
+            // Radio elements
+            const groups = [
+                'likert_1', 'likert_2', 'likert_3', 'likert_4', 'likert_5',
+                'osgood_1', 'osgood_2', 'osgood_3', 'osgood_4', 'osgood_5',
+                'guttman_1', 'guttman_2', 'guttman_3', 'guttman_4', 'guttman_5',
+                'rating_1', 'rating_2', 'rating_3', 'rating_4', 'rating_5',
+                'thurstone_1', 'thurstone_2', 'thurstone_3', 'thurstone_4', 'thurstone_5'
+            ];
+
+            groups.forEach(name => {
+                const inputs = form.querySelectorAll(`input[name="${name}"]`);
+                if(inputs.length > 0) {
+                    // Bias slightly to higher ratings for demo realism
+                    let index = Math.floor(Math.random() * inputs.length);
+                    if(inputs.length >= 5 && Math.random() > 0.3) {
+                        index = Math.min(inputs.length - 1, Math.floor(Math.random() * 2)); // Select high ratings
+                    }
+                    inputs[index].checked = true;
+                }
+            });
+
+            // Trigger Calculation
+            calculateResults(new Event('submit'));
+        }
+
+        function calculateResults(e) {
+            if(e) e.preventDefault();
+
+            const form = document.getElementById('attitudeForm');
+            const formData = new FormData(form);
+
+            // Calculate Likert (1-5)
+            const likertVals = [
+                Number(formData.get('likert_1') || 4),
+                Number(formData.get('likert_2') || 4),
+                Number(formData.get('likert_3') || 5),
+                Number(formData.get('likert_4') || 5),
+                Number(formData.get('likert_5') || 4)
+            ];
+
+            // Calculate Osgood (Scaled 1-7 to 1-5 for uniform standard)
+            const osgoodRaw = [
+                Number(formData.get('osgood_1') || 6),
+                Number(formData.get('osgood_2') || 6),
+                Number(formData.get('osgood_3') || 7),
+                Number(formData.get('osgood_4') || 6),
+                Number(formData.get('osgood_5') || 6)
+            ];
+            const osgoodVals = osgoodRaw.map(v => (v / 7) * 5);
+
+            // Calculate Guttman (0-1 scaled to 1-5)
+            const guttmanRaw = [
+                Number(formData.get('guttman_1') || 1),
+                Number(formData.get('guttman_2') || 1),
+                Number(formData.get('guttman_3') || 1),
+                Number(formData.get('guttman_4') || 0),
+                Number(formData.get('guttman_5') || 1)
+            ];
+            const guttmanVals = guttmanRaw.map(v => v === 1 ? 4.5 : 2.5);
+
+            // Calculate Rating (1-5)
+            const ratingVals = [
+                Number(formData.get('rating_1') || 5),
+                Number(formData.get('rating_2') || 4),
+                Number(formData.get('rating_3') || 5),
+                Number(formData.get('rating_4') || 4),
+                Number(formData.get('rating_5') || 5)
+            ];
+
+            // Calculate Thurstone (1-5 weight)
+            const thurstoneVals = [
+                Number(formData.get('thurstone_1') || 5),
+                Number(formData.get('thurstone_2') || 4),
+                Number(formData.get('thurstone_3') || 3),
+                Number(formData.get('thurstone_4') || 2),
+                Number(formData.get('thurstone_5') || 1)
+            ];
+
+            // Helper Statistics Functions
+            const getStats = (arr) => {
+                const mean = arr.reduce((a, b) => a + b, 0) / arr.length;
+                const variance = arr.reduce((a, b) => a + Math.pow(b - mean, 2), 0) / arr.length;
+                const sd = Math.sqrt(variance);
+                const cv = (sd / mean) * 100;
+                return { mean, sd, cv };
+            };
+
+            const getInterpretation = (mean) => {
+                if(mean >= 4.21) return { text: "ดีมาก", bg: "bg-emerald-100", textColor: "text-emerald-800" };
+                if(mean >= 3.41) return { text: "ดี", bg: "bg-teal-100", textColor: "text-teal-800" };
+                if(mean >= 2.61) return { text: "ปานกลาง", bg: "bg-amber-100", textColor: "text-amber-800" };
+                if(mean >= 1.81) return { text: "พอใช้", bg: "bg-orange-100", textColor: "text-orange-800" };
+                return { text: "ปรับปรุง", bg: "bg-rose-100", textColor: "text-rose-800" };
+            };
+
+            const likertStats = getStats(likertVals);
+            const osgoodStats = getStats(osgoodVals);
+            const guttmanStats = getStats(guttmanVals);
+            const ratingStats = getStats(ratingVals);
+            const thurstoneStats = getStats(thurstoneVals);
+
+            // Update Section Tables
+            const updateRow = (id, stats) => {
+                const interp = getInterpretation(stats.mean);
+                document.getElementById(`tbl-${id}-mean`).innerText = stats.mean.toFixed(2);
+                document.getElementById(`tbl-${id}-sd`).innerText = stats.sd.toFixed(2);
+                document.getElementById(`tbl-${id}-cv`).innerText = stats.cv.toFixed(1) + '%';
+                document.getElementById(`tbl-${id}-result`).innerHTML = `<span class="px-2 py-0.5 rounded ${interp.bg} ${interp.textColor} font-medium">${interp.text}</span>`;
+            };
+
+            updateRow('likert', likertStats);
+            updateRow('osgood', osgoodStats);
+            updateRow('guttman', guttmanStats);
+            updateRow('rating', ratingStats);
+            updateRow('thurstone', thurstoneStats);
+
+            // Compute Total Combined Stats
+            const allVals = [...likertVals, ...osgoodVals, ...guttmanVals, ...ratingVals, ...thurstoneVals];
+            const totalStats = getStats(allVals);
+            const totalInterp = getInterpretation(totalStats.mean);
+
+            // Update Total Row & Cards
+            document.getElementById('tbl-total-mean').innerText = totalStats.mean.toFixed(2);
+            document.getElementById('tbl-total-sd').innerText = totalStats.sd.toFixed(2);
+            document.getElementById('tbl-total-cv').innerText = totalStats.cv.toFixed(1) + '%';
+            document.getElementById('tbl-total-result').innerHTML = `<span class="px-2 py-0.5 rounded bg-emerald-600 text-white font-medium">${totalInterp.text}</span>`;
+
+            document.getElementById('stat-mean').innerText = totalStats.mean.toFixed(2);
+            document.getElementById('stat-sd').innerText = totalStats.sd.toFixed(2);
+            document.getElementById('stat-cv').innerText = totalStats.cv.toFixed(1) + '%';
+            document.getElementById('stat-result').innerText = totalInterp.text;
+            document.getElementById('stat-mean-label').innerText = `ระดับ: เจตคติในเกณฑ์ (${totalInterp.text})`;
+
+            // Update Chart Visuals
+            const chartData = [
+                Number(likertStats.mean.toFixed(2)),
+                Number(osgoodStats.mean.toFixed(2)),
+                Number(guttmanStats.mean.toFixed(2)),
+                Number(ratingStats.mean.toFixed(2)),
+                Number(thurstoneStats.mean.toFixed(2))
+            ];
+            
+            initChart(chartData);
+
+            // Smooth scroll to Dashboard if triggered by user click
+            if(e && e.type === 'submit') {
+                document.getElementById('section-dashboard').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    </script>
+</body>
+</html>
